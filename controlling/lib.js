@@ -11,6 +11,11 @@ function getFix(slope, a){
   return a.y - slope*a.x;
 };
 
+function solveLinearEquation(polynom, result){
+  var b = polynom[0], m = polynom[1];
+  return (result-b)/m;
+};
+
 var Controlling = {};
 
 Controlling.lenk = function(data){
@@ -22,6 +27,7 @@ Controlling.lenk = function(data){
   console.log(this.regs);
   console.log(this.costReg.toString());
   console.log(this.yields.toString());
+  console.log(this.enterpriseOptimalQuantity);
 };
 
 Controlling.lenk.prototype.init = function(){
@@ -32,6 +38,7 @@ Controlling.lenk.prototype.init = function(){
   this.setDepartmentCostRegressions();
   this.setCostPolynom();
   this.setYieldsPolynom();
+  this.setOptimalQuantity();
 };
 
 Controlling.lenk.prototype.setReturns = function(){
@@ -100,4 +107,9 @@ Controlling.lenk.prototype.setCostPolynom = function(){
 
 Controlling.lenk.prototype.setYieldsPolynom = function(departmentIndex){
   this.yields = this.returns.times(new MathLib.Polynomial([0,1])).plus(this.costReg.times(new MathLib.Polynomial([-1])));
+};
+
+Controlling.lenk.prototype.setOptimalQuantity = function(departmentIndex){
+  var deviate = this.yields.differentiate();
+  this.enterpriseOptimalQuantity = Math.ceil(solveLinearEquation(deviate, 0));
 };

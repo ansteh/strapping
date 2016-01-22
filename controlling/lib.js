@@ -39,6 +39,8 @@ Controlling.lenk.prototype.init = function(){
   this.setCostPolynom();
   this.setYieldsPolynom();
   this.setOptimalQuantity();
+  this.setDepatmentCostAndTransferDutyPerProduct();
+  this.createLenkTable();
 };
 
 Controlling.lenk.prototype.setReturns = function(){
@@ -112,4 +114,33 @@ Controlling.lenk.prototype.setYieldsPolynom = function(departmentIndex){
 Controlling.lenk.prototype.setOptimalQuantity = function(departmentIndex){
   var deviate = this.yields.differentiate();
   this.enterpriseOptimalQuantity = Math.ceil(solveLinearEquation(deviate, 0));
+};
+
+Controlling.lenk.prototype.setDepatmentCostAndTransferDutyPerProduct = function(departmentIndex){
+  var previous;
+  this.regs.forEach(function(costReg, index){
+    costReg.cost = costReg.reg[1];
+    if(previous){
+      costReg.transferDuty = previous.transferDuty + previous.cost;
+    } else {
+      costReg.transferDuty = 0;
+    }
+    previous = costReg;
+  });
+};
+
+Controlling.lenk.prototype.createLenkTable = function(departmentIndex){
+  var that = this;
+  var sellerIndex = this.regs.length-1;
+  var seller = this.regs[sellerIndex];
+  this.data.forEach(function(point){
+    var yields = point.returns-(point.quantity*seller.transferDuty + point.departments[sellerIndex]['costs']);
+    //console.log(point.quantity, point.quantity*seller.transferDuty, point.departments[sellerIndex]['costs'], yields);
+    point.lenk = {
+      seller: {
+        transfer: point.quantity*seller.transferDuty,
+        yields: yields
+      }
+    };
+  });
 };

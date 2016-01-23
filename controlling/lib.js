@@ -144,3 +144,53 @@ Controlling.lenk.prototype.createLenkTable = function(departmentIndex){
     };
   });
 };
+
+var schema = {};
+
+schema.eva = {
+  capital: {
+    own: {
+      weight: "number",
+      beta: "number",
+      interests: {
+        low_risk_assets: "number",
+        market_premium_risk: "number"
+      }
+    },
+    outside: {
+      weight: "number",
+      tax: "number",
+      interests: {
+        low_risk_assets: "number",
+        market_premium_risk: "number"
+      }
+    }
+  }
+};
+
+schema.eva.department = {
+  wealth: "number",
+  outcome: "number"
+};
+
+Controlling.eva = function(options, departments){
+  this.options = options;
+  this.init();
+};
+
+Controlling.eva.prototype.init = function(departments){
+  this.setOwnCapitalRate();
+  this.setOutsideCapitalRate();
+  this.wacc = this.ownCapitalRate*this.options.capital.own.weight + this.outsideCapitalRate*this.options.capital.outside.weight;
+  console.log(this.wacc);
+};
+
+Controlling.eva.prototype.setOwnCapitalRate = function(departments){
+  var own = this.options.capital.own;
+  this.ownCapitalRate = own.interests.low_risk_assets + own.interests.market_premium_risk*own.beta;
+};
+
+Controlling.eva.prototype.setOutsideCapitalRate = function(departments){
+  var outside = this.options.capital.outside;
+  this.outsideCapitalRate = (1-outside.tax) * (outside.interests.low_risk_assets + outside.interests.market_premium_risk);
+};

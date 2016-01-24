@@ -173,7 +173,7 @@ schema.eva.department = {
   outcome: "number"
 };
 
-Controlling.eva = function(options, departments){
+Controlling.eva = function(options){
   this.options = options;
   this.init();
 };
@@ -193,4 +193,8 @@ Controlling.eva.prototype.setOwnCapitalRate = function(departments){
 Controlling.eva.prototype.setOutsideCapitalRate = function(departments){
   var outside = this.options.capital.outside;
   this.outsideCapitalRate = (1-outside.tax) * (outside.interests.low_risk_assets + outside.interests.market_premium_risk);
+};
+
+Controlling.eva.prototype.getEVA = function(department){
+  return department.outcome - this.this.wacc/100*department.wealth;
 };

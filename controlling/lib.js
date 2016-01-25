@@ -21,13 +21,13 @@ var Controlling = {};
 Controlling.lenk = function(data){
   this.data = data;
   this.init();
-  console.log(this.data[0]);
+  /*console.log(this.data[0]);
   console.log(this.data[this.data.length-1]);
   console.log(this.linearPrice);
   console.log(this.regs);
   console.log(this.costReg.toString());
   console.log(this.yields.toString());
-  console.log(this.enterpriseOptimalQuantity);
+  console.log(this.enterpriseOptimalQuantity);*/
 };
 
 Controlling.lenk.prototype.init = function(){
@@ -203,3 +203,30 @@ Controlling.eva.prototype.getEVA = function(department){
 Controlling.eva.prototype.getROCE = function(department){
   return department.outcome/department.wealth;
 };
+
+schema.time = {
+  minutes: "number"
+};
+
+schema.product = {};
+schema.product.signature = {
+  price: "number",
+  cost: {
+    variable: "number",
+    fix: "number"
+  },
+  time: [schema.time],
+  marginalReturn: "number"
+};
+
+schema.product.bundle = {
+  quantity: "number",
+  signature: schema.product.signature
+};
+
+schema.production = {
+  products: [schema.product.bundle],
+  time: schema.time
+};
+
+schema.fabric = {};

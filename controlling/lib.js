@@ -178,23 +178,28 @@ Controlling.eva = function(options){
   this.init();
 };
 
-Controlling.eva.prototype.init = function(departments){
+Controlling.eva.prototype.init = function(){
   this.setOwnCapitalRate();
   this.setOutsideCapitalRate();
   this.wacc = this.ownCapitalRate*this.options.capital.own.weight + this.outsideCapitalRate*this.options.capital.outside.weight;
   console.log(this.wacc);
 };
 
-Controlling.eva.prototype.setOwnCapitalRate = function(departments){
+Controlling.eva.prototype.setOwnCapitalRate = function(){
   var own = this.options.capital.own;
   this.ownCapitalRate = own.interests.low_risk_assets + own.interests.market_premium_risk*own.beta;
 };
 
-Controlling.eva.prototype.setOutsideCapitalRate = function(departments){
+Controlling.eva.prototype.setOutsideCapitalRate = function(){
   var outside = this.options.capital.outside;
   this.outsideCapitalRate = (1-outside.tax) * (outside.interests.low_risk_assets + outside.interests.market_premium_risk);
 };
 
 Controlling.eva.prototype.getEVA = function(department){
-  return department.outcome - this.this.wacc/100*department.wealth;
+  return department.outcome - this.wacc/100*department.wealth;
+};
+
+// return on capital employement
+Controlling.eva.prototype.getROCE = function(department){
+  return department.outcome/department.wealth;
 };

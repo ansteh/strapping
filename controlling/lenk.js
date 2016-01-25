@@ -13,3 +13,39 @@ var lenk = [
 console.log(lenk);
 
 var test = new Controlling.lenk(lenk);
+
+var testEva = new Controlling.eva({
+  capital: {
+    own: {
+      weight: 0.4,
+      beta: 1,
+      interests: {
+        low_risk_assets: 4,
+        market_premium_risk: 5.5
+      }
+    },
+    outside: {
+      weight: 0.6,
+      tax: 0.45,
+      interests: {
+        low_risk_assets: 4,
+        market_premium_risk: 1.7
+      }
+    }
+  }
+});
+
+var evaDeparments = [{
+  wealth: 1000,
+  outcome: 450
+},{
+  wealth: 775,
+  outcome: 30
+},{
+  wealth: 1775,
+  outcome: 480
+}];
+
+evaDeparments.forEach(function(department){
+  console.log(testEva.getEVA(department), testEva.getROCE(department));
+});

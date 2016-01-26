@@ -229,4 +229,77 @@ schema.production = {
   time: schema.time
 };
 
-schema.fabric = {};
+schema.facility = {
+  cost: "number",
+  capacity: "number"
+};
+
+Controlling.production = {};
+
+Controlling.production.programm = function(){
+  this.facilities = {};
+  this.products = [];
+};
+
+Controlling.production.programm.prototype.produce = function(scheme){
+  this.optimize();
+};
+
+Controlling.production.programm.prototype.optimize = function(){
+  this.setProductCosts();
+  this.setDomainFacility();
+  this.getShortage();
+};
+
+Controlling.production.programm.prototype.addFacility = function(name, options){
+  this.facilities[name] = options;
+};
+
+Controlling.production.programm.prototype.addProduct = function(product){
+  this.products.push(product);
+};
+
+Controlling.production.programm.prototype.setProductCosts = function(){
+  var that = this;
+  this.products.forEach(function(product){
+    that.setFacilitiesProductCosts(product);
+  });
+};
+
+Controlling.production.programm.prototype.setFacilitiesProductCosts = function(product){
+  var that = this;
+  product.facilities.forEach(function(facility){
+    facility.cost = that.getFacilityCosts(facility.name)*facility.duration;
+  });
+};
+
+Controlling.production.programm.prototype.getFacilityCosts = function(name){
+  return this.facilities[name]['cost'];
+};
+
+Controlling.production.programm.prototype.getShortage = function(){
+
+};
+
+Controlling.production.programm.prototype.setDomainFacility = function(){
+  this.domain = this.facilities[Object.keys(this.facilities)[0]];
+  var that = this, facility;
+  Object.keys(this.facilities).forEach(function(name){
+    facility = that.facilities[name];
+    if(that.gathersCostOfProduct(facility) < that.gathersCostOfProduct(that.domain))
+      that.domain = facility;
+  });
+};
+
+Controlling.production.programm.prototype.gathersCostOfProduct = function(facility){
+  var that = this;
+  return this.products.reduce(function(sum, product){
+    return sum + that.getFacilityOfProduct(facility.name, product).cost;
+  }, 0);
+};
+
+Controlling.production.programm.prototype.getFacilityOfProduct = function(name, product){
+  return product.facilities.filter(function(facility){
+    return facility.name === name;
+  })[0];
+};

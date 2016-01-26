@@ -49,3 +49,74 @@ var evaDeparments = [{
 evaDeparments.forEach(function(department){
   console.log(testEva.getEVA(department), testEva.getROCE(department));
 });
+
+var productionProgramm = new Controlling.production.programm();
+
+productionProgramm.addFacility('anlage 1', {
+  name: 'anlage 1',
+  cost: 6,
+  capacity: 60000
+});
+
+productionProgramm.addFacility('anlage 2', {
+  name: 'anlage 2',
+  cost: 3,
+  capacity: 56000
+});
+
+productionProgramm.addFacility('anlage 3', {
+  name: 'anlage 3',
+  cost: 2,
+  capacity: 100000
+});
+
+productionProgramm.addProduct({
+  name: 'arabica',
+  facilities: [
+    {
+      name: 'anlage 1',
+      duration: 2.5
+    },{
+      name: 'anlage 2',
+      duration: 8
+    },{
+      name: 'anlage 3',
+      duration: 9
+    },
+  ]
+});
+
+productionProgramm.addProduct({
+  name: 'robusta',
+  facilities: [
+    {
+      name: 'anlage 1',
+      duration: 2
+    },{
+      name: 'anlage 2',
+      duration: 6
+    },{
+      name: 'anlage 3',
+      duration: 8
+    },
+  ]
+});
+
+productionProgramm.addProduct({
+  name: 'excelsa',
+  facilities: [
+    {
+      name: 'anlage 1',
+      duration: 1
+    },{
+      name: 'anlage 2',
+      duration: 4
+    },{
+      name: 'anlage 3',
+      duration: 4.5
+    },
+  ]
+});
+
+productionProgramm.produce();
+console.log(productionProgramm);

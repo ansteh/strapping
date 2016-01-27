@@ -120,3 +120,6 @@ productionProgramm.addProduct({
 
 productionProgramm.produce();
 console.log(productionProgramm);
+
+var linearBreakEven = Controlling.breakEven.linearYield(0.5, 450000);
+console.log(linearBreakEven);

@@ -16,6 +16,15 @@ function solveLinearEquation(polynom, result){
   return (result-b)/m;
 };
 
+function sum(collection, path){
+  return collection.reduce(function(sum, item){
+    if(path){
+      return sum+item[path];
+    }
+    return sum+item;
+  }, 0);
+};
+
 var Controlling = {};
 
 Controlling.lenk = function(data){
@@ -302,4 +311,12 @@ Controlling.production.programm.prototype.getFacilityOfProduct = function(name, 
   return product.facilities.filter(function(facility){
     return facility.name === name;
   })[0];
+};
+
+//break-even-units
+
+Controlling.breakEven = {};
+
+Controlling.breakEven.linearYield = function(yieldViaUnit, fixCost){
+  return fixCost/yieldViaUnit;
 };

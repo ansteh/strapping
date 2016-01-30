@@ -123,3 +123,95 @@ console.log(productionProgramm);
 
 var linearBreakEven = Controlling.breakEven.linearYield(0.5, 450000);
 console.log(linearBreakEven);
+
+var usefullness = new Controlling.usefullness([
+  {
+    name: "cost",
+    weight: 0.4
+  },
+  {
+    name: "taste",
+    weight: 0.35
+  },
+  {
+    name: "consistency",
+    weight: 0.1
+  },
+  {
+    name: "reparation",
+    weight: 0.1
+  },
+  {
+    name: "time",
+    weight: 0.05
+  }
+]);
+
+console.log(usefullness);
+var preferencedProduct = usefullness.cherryPick([
+  {
+    name: "schaum",
+    attributes: {
+      cost: 6,
+      taste: 8,
+      consistency: 10,
+      reparation: 8,
+      time: 5
+    }
+  },
+  {
+    name: "Genuss",
+    attributes: {
+      cost: 4,
+      taste: 10,
+      consistency: 8,
+      reparation: 4,
+      time: 8
+    }
+  },
+  {
+    name: "Sleepless",
+    attributes: {
+      cost: 8,
+      taste: 6,
+      consistency: 4,
+      reparation: 6,
+      time: 9
+    }
+  }
+]);
+
+console.log(preferencedProduct);
+
+var discrepanceAnalysis = new Controlling.discrepanceAnalysis([
+  {
+    value: 82000,
+    variator: 10
+  },
+  {
+    value: 57000,
+    variator: 7
+  },
+  {
+    value: 41000,
+    variator: 6
+  },
+  {
+    value: 26000,
+    variator: 3
+  },
+  {
+    value: 15000,
+    variator: 2
+  },
+  {
+    value: 13000,
+    variator: 5
+  },
+  {
+    value: 26000,
+    variator: 0
+  }
+], 1500);
+
+console.log(discrepanceAnalysis);

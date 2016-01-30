@@ -320,3 +320,69 @@ Controlling.breakEven = {};
 Controlling.breakEven.linearYield = function(yieldViaUnit, fixCost){
   return fixCost/yieldViaUnit;
 };
+
+Controlling.usefullness = function(attributes){
+  this.attributes = attributes;
+  console.log(this.attributes);
+};
+
+Controlling.usefullness.prototype.cherryPick = function(products){
+  var that = this;
+  products.forEach(function(product){
+    that.eval(product);
+  });
+  return products.reduce(function(picked, product){
+    if(picked.evaluation < product.evaluation){
+      return product;
+    }
+    return picked;
+  }, products[0]);
+};
+
+Controlling.usefullness.prototype.eval = function(product){
+  product.evaluation = this.attributes.reduce(function(sum, attribute){
+    return sum + attribute.weight*product.attributes[attribute.name];
+  }, 0);
+};
+
+schema.discrepanceAnalysis = {
+  plancosts: [{
+    value: "number",
+    variator: "number"
+  }]
+};
+
+Controlling.discrepanceAnalysis = function(plancosts, duration){
+  this.plancosts = plancosts;
+  this.duration = duration;
+
+  this.init();
+};
+
+Controlling.discrepanceAnalysis.prototype.init = function(plancosts){
+  this.setCostFuncs();
+};
+
+Controlling.discrepanceAnalysis.prototype.setCostFuncs = function(){
+  var that = this;
+  this.funcs = this.plancosts.map(function(plancost){
+    return that.getCostFunc(plancost);
+  });
+
+  this.costFuncs = this.funcs.reduce(function(costFunc, func){
+    return [costFunc[0]+func[0], costFunc[1]+func[1]];
+  }, [0,0]);
+
+  this.sum = this.plancosts.reduce(function(sum, plancost){
+    return sum+plancost.value;
+  }, 0);
+
+  this.variator = this.plancosts.reduce(function(sum, plancost){
+    return sum + plancost.value*plancost.variator/10;
+  }, 0)/this.sum;
+};
+
+Controlling.discrepanceAnalysis.prototype.getCostFunc = function(plancost){
+  var multiplier = plancost.variator/10;
+  return [plancost.value*(1-multiplier), plancost.value*multiplier/this.duration];
+};

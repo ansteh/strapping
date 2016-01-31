@@ -386,3 +386,22 @@ Controlling.discrepanceAnalysis.prototype.getCostFunc = function(plancost){
   var multiplier = plancost.variator/10;
   return [plancost.value*(1-multiplier), plancost.value*multiplier/this.duration];
 };
+
+schema.targetCosting = {
+  priority: {
+    name: "string",
+    share: "number"
+  },
+  priorities: ["$ref.schema.targetCosting.priority"],
+  components: [{
+    name: "string",
+    shares: [{
+      priority: "$elemOf.schema.targetCosting.priorities.name",
+      share: "number"
+    }]
+  }]
+};
+
+Controlling.targetCosting = function(priorities){
+  this.priorities = priorities;
+};

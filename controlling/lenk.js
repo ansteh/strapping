@@ -215,3 +215,154 @@ var discrepanceAnalysis = new Controlling.discrepanceAnalysis([
 ], 1500);
 
 console.log(discrepanceAnalysis);
+
+var targetCostingPriorities = [
+  {
+    name: "size",
+    share: 0.3
+  },
+  {
+    name: "optik",
+    share: 0.25
+  },
+  {
+    name: "internet",
+    share: 0.2
+  },
+  {
+    name: "camera",
+    share: 0.15
+  },
+  {
+    name: "charge",
+    share: 0.1
+  }
+];
+
+var targetCostingComponents = [
+  {
+    name: "Gehäuse",
+    shares: [
+      {
+        priority: "size",
+        share: 0.55
+      },
+      {
+        priority: "optik",
+        share: 0.45
+      },
+      {
+        priority: "internet",
+        share: 0
+      },
+      {
+        priority: "camera",
+        share: 0
+      },
+      {
+        priority: "charge",
+        share: 0
+      }
+    ]
+  },
+  {
+    name: "Display",
+    shares: [
+      {
+        priority: "size",
+        share: 0.35
+      },
+      {
+        priority: "optik",
+        share: 0.2
+      },
+      {
+        priority: "internet",
+        share: 0.05
+      },
+      {
+        priority: "camera",
+        share: 0.2
+      },
+      {
+        priority: "charge",
+        share: 0.2
+      }
+    ]
+  },
+  {
+    name: "Bedienung",
+    shares: [
+      {
+        priority: "size",
+        share: 0.05
+      },
+      {
+        priority: "optik",
+        share: 0.15
+      },
+      {
+        priority: "internet",
+        share: 0.3
+      },
+      {
+        priority: "camera",
+        share: 0.1
+      },
+      {
+        priority: "charge",
+        share: 0.4
+      }
+    ]
+  },
+  {
+    name: "Elektronik",
+    shares: [
+      {
+        priority: "size",
+        share: 0
+      },
+      {
+        priority: "optik",
+        share: 0.1
+      },
+      {
+        priority: "internet",
+        share: 0.35
+      },
+      {
+        priority: "camera",
+        share: 0.3
+      },
+      {
+        priority: "charge",
+        share: 0.25
+      }
+    ]
+  },
+  {
+    name: "Speicherkarte",
+    shares: [
+      {
+        priority: "size",
+        share: 0.05
+      },
+      {
+        priority: "optik",
+        share: 0.1
+      },
+      {
+        priority: "internet",
+        share: 0.3
+      },
+      {
+        priority: "camera",
+        share: 0.4
+      },
+      {
+        priority: "charge",
+        share: 0.15
+      }
+    ]
+  }
+];

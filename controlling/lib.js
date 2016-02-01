@@ -405,3 +405,42 @@ schema.targetCosting = {
 Controlling.targetCosting = function(priorities){
   this.priorities = priorities;
 };
+
+Controlling.targetCosting.prototype.setComponents = function(components){
+  this.components = components;
+  this.setShares();
+  this.setRelativeImportance();
+};
+
+Controlling.targetCosting.prototype.setShares = function(){
+  var that = this;
+  this.components.forEach(function(component){
+    that.setSharesOfComponent(component);
+  });
+};
+
+Controlling.targetCosting.prototype.setSharesOfComponent = function(component){
+  var that = this;
+  component.shares.forEach(function(componentPriority){
+    componentPriority.importance = that.getPriorityByName(componentPriority.priority).share*componentPriority.share;
+  });
+};
+
+Controlling.targetCosting.prototype.getPriorityByName = function(name){
+  return this.priorities.filter(function(priority){
+    return priority.name === name;
+  })[0];
+};
+
+Controlling.targetCosting.prototype.setRelativeImportance = function(){
+  var that = this;
+  this.components.forEach(function(component){
+    that.setRelativeImportanceOfComponent(component);
+  });
+};
+
+Controlling.targetCosting.prototype.setRelativeImportanceOfComponent = function(component){
+  component.relativeImportance = component.shares.reduce(function(sum, priority){
+    return sum+priority.importance;
+  }, 0);
+};

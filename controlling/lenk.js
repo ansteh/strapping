@@ -366,3 +366,7 @@ var targetCostingComponents = [
     ]
   }
 ];
+
+var targetCosting = new Controlling.targetCosting(targetCostingPriorities);
+targetCosting.setComponents(targetCostingComponents);
+console.log(targetCosting);

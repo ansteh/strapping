@@ -399,7 +399,14 @@ schema.targetCosting = {
       priority: "$elemOf.schema.targetCosting.priorities.name",
       share: "number"
     }]
-  }]
+  }],
+  driftingCosts: {
+    totalCosts: "number",
+    shares: [{
+      priority: "string",
+      share: "number"
+    }]
+  }
 };
 
 Controlling.targetCosting = function(priorities){
@@ -443,4 +450,42 @@ Controlling.targetCosting.prototype.setRelativeImportanceOfComponent = function(
   component.relativeImportance = component.shares.reduce(function(sum, priority){
     return sum+priority.importance;
   }, 0);
+};
+
+Controlling.targetCosting.prototype.setDriftingCosts = function(driftingCosts){
+  this.driftingCosts = driftingCosts;
+  this.setDriftingCostsOfAllComponent();
+  this.setTargetingIndices();
+};
+
+Controlling.targetCosting.prototype.setDriftingCostsOfAllComponent = function(){
+  var that = this;
+  this.components.forEach(function(component){
+    that.setDriftingCostsOfComponent(component);
+  });
+};
+
+Controlling.targetCosting.prototype.setDriftingCostsOfComponent = function(component){
+  var driftingCostsComponent = this.getDriftingCostsOfComponentByName(component.name);
+  component.driftingCostsShare = driftingCostsComponent.share;
+  component.driftingCosts = this.driftingCosts.totalCosts*driftingCostsComponent.share;
+};
+
+Controlling.targetCosting.prototype.getDriftingCostsOfComponentByName = function(name){
+  return this.driftingCosts.shares.filter(function(component){
+    return component.name === name;
+  })[0];
+};
+
+Controlling.targetCosting.prototype.setTargetingIndices = function(){
+  this.components.forEach(function(component){
+    component.index = component.relativeImportance/component.driftingCostsShare;
+  });
+};
+
+Controlling.targetCosting.prototype.setTargetingCostsBy = function(totalTargetingCosts){
+  this.totalTargetingCosts = totalTargetingCosts;
+  this.components.forEach(function(component){
+    component.targetingCosts = component.relativeImportance*totalTargetingCosts;
+  });
 };

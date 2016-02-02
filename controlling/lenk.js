@@ -369,4 +369,34 @@ var targetCostingComponents = [
 
 var targetCosting = new Controlling.targetCosting(targetCostingPriorities);
 targetCosting.setComponents(targetCostingComponents);
+
+var driftingCosts = {
+  totalCosts: 250,
+  shares: [
+    {
+      name: "Gehäuse",
+      share: 0.15
+    },
+    {
+      name: "Display",
+      share: 0.2
+    },
+    {
+      name: "Bedienung",
+      share: 0.25
+    },
+    {
+      name: "Elektronik",
+      share: 0.35
+    },
+    {
+      name: "Speicherkarte",
+      share: 0.5
+    }
+  ]
+};
+
+targetCosting.setDriftingCosts(driftingCosts);
+targetCosting.setTargetingCostsBy(220);
+
 console.log(targetCosting);

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>D3S</title>
+  	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.1.1/material.indigo-pink.min.css">
+    <script defer src="https://code.getmdl.io/1.1.1/material.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.12/d3.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/function-plot/1.16.2/function-plot.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/regression/1.3.0/regression.min.js"></script>
+  </head>
+  <body>
+    <div style="max-width: 600px; margin: auto;">
+      <div id="quadratic-with-options"></div>
+    </div>
+  </body>
+
+  <script>
+    var data = [[0,1], [32, 67], [12, 79]];
+    var result = regression('linear', data);
+    console.log(result);
+    console.log('x * '+result.equation[0]+' + '+result.equation[1]);
+
+    functionPlot({
+      title: result.string,
+      target: '#quadratic-with-options',
+      width: 580,
+      height: 400,
+      disableZoom: true,
+      xAxis: {
+        label: 'x - axis',
+        domain: [0, 100]
+      },
+      yAxis: {
+        label: 'y - axis',
+        domain: [0, 100]
+      },
+      data: [{
+        fn: 'x * '+result.equation[0]+' + '+result.equation[1]
+      },{
+        fn: 'x'
+      }]
+    });
+  </script>
+</html>

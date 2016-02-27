@@ -1,18 +1,30 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="app">
   <head>
     <title>D3S</title>
   	<meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <!--<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="https://code.getmdl.io/1.1.1/material.indigo-pink.min.css">
-    <script defer src="https://code.getmdl.io/1.1.1/material.min.js"></script>
+    <script defer src="https://code.getmdl.io/1.1.1/material.min.js"></script>-->
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.0.5/angular-material.min.css">
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.12/d3.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/function-plot/1.16.2/function-plot.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/regression/1.3.0/regression.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.5.1/lodash.min.js"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-messages.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-animate.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-aria.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.0.5/angular-material.min.js"></script>
   </head>
   <body>
     <div style="max-width: 600px; margin: auto;">
       <div id="quadratic-with-options"></div>
+      <source></source>
     </div>
   </body>
 
@@ -20,7 +32,25 @@
     var data = [[0,1], [32, 67], [12, 79]];
     var result = regression('linear', data);
     console.log(result);
-    console.log('x * '+result.equation[0]+' + '+result.equation[1]);
+    console.log(linearToString(result));
+
+    function linearToString(result){
+      return 'x * '+result.equation[0]+' + '+result.equation[1];
+    };
+
+    function getAxis(name, data){
+      var axis = name === 'x' ? 0 : 1;
+      return _.map(data, function(point){
+        return point[axis];
+      });
+    };
+
+    console.log(getAxis('x', data));
+    console.log(getAxis('y', data));
+
+    function linearToString(result){
+
+    };
 
     functionPlot({
       title: result.string,
@@ -42,5 +72,59 @@
         fn: 'x'
       }]
     });
+
+    (function(angular){
+      var app = angular.module('app', ['ngMaterial']);
+
+      app.directive('source', function () {
+        return {
+          restrict: 'E',
+          scope: {},
+          templateUrl: 'source.html',
+          controller: function ($scope, $element) {
+            $scope.cell;
+
+            $scope.container = _.map(data, function(point){
+              return {
+                x: point[0],
+                y: point[1]
+              }
+            });
+
+            $scope.xValues = getAxis('x', data);
+            $scope.yValues = getAxis('y', data);
+
+            $scope.setCell = function(index){
+              $scope.cell = index;
+            };
+
+            $scope.update = function(row, key){
+              row[key] = parseInt(row[key]);
+            };
+
+            $scope.$watch('cell', function(){
+              console.log($scope.container);
+            });
+          }
+        };
+      });
+    }(angular));
+
   </script>
+
+  <script type="text/ng-template" id="source.html">
+     <div>show: {{ show }}</div>
+     <ul>
+        <li ng-repeat="row in container" style="list-style-type: none;">
+          <md-input-container flex="50" style="padding: 0; margin: 0;" ng-disabled="cell !== $index" ng-click="setCell($index)">
+            <input type="text" aria-label="source-data-{{ $index }}" ng-model="row.x" style="text-align: right;" ng-change="update(row, 'x')">
+          </md-input-container>
+
+          <md-input-container flex="50" style="padding: 0; margin: 0;" ng-disabled="cell !== $index" ng-click="setCell($index)">
+            <input type="text" aria-label="source-data-{{ $index }}" ng-model="row.y" style="text-align: right;" ng-change="update(row, 'y')">
+          </md-input-container>
+        </li>
+     </ul>
+  </script>
+
 </html>

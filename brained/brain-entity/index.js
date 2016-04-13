@@ -1,34 +1,18 @@
 'use strict';
-const _ = require('lodash');
+exports.mirror = require('./mirror');
+exports.prepare = require('./prepare');
 
-function mirror(schema){
-  let relais = {};
-
-  relais.scheme = function(input){
-    _.forOwn(input, function(value, key){
-      let options = schema[key];
-      input[key] = value/options.weight;
-
-      if(options.input){
-        input[key] = options.input(input[key]);
-      }
-    });
-    return input;
-  };
-
-  relais.reverse = function(output){
-    _.forOwn(output, function(value, key){
-      let options = schema[key];
-      output[key] = value*options.weight;
-
-      if(options.output){
-        output[key] = options.output(output[key]);
-      }
-    });
-    return output;
-  };
-
-  return relais;
+let inputOptions = {
+  date: {
+    type: 'date',
+    pattern: ['month', 'week', 'day', 'hour']
+  },
+  test: {
+    weight: 5
+  }
 };
 
-exports.mirror = mirror;
+//console.log(exports.prepare(inputOptions));
+let transition = exports.mirror(inputOptions);
+let tarnsitioned = transition.scheme({ date: Date.now(), test: 4 });
+console.log(tarnsitioned);

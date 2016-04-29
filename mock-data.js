@@ -55,3 +55,22 @@ const mock = (days) => {
 };
 
 console.log(mock(20));
+
+/*let hours =
+  17: { bri: [120, 140], meetings: [0, 3]},
+  18: { bri: [140, 170], meetings: [1, 4]},
+  19: { bri: [170, 220], meetings: [2, 5]},
+  20: { bri: [210, 245], meetings: [4, 6]},
+  21: { bri: [230, 250], meetings: [5, 7]},
+  22: { bri: [245, 254], meetings: [7, 10]}
+};
+
+let options = {
+  dates: {
+    1: { hours: hours },
+    2: { hours: hours },
+    3: { hours: hours },
+    4: { hours: hours },
+    5: { hours: hours }
+  }
+};*/

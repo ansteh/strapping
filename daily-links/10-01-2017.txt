@@ -56,3 +56,7 @@ https://news.google.com/news/more?ncl=djffWWtWG-9p1cM&authuser=0&ned=us
 http://www.usatoday.com/story/opinion/2017/01/09/americans-need-to-learn-financial-literacy-personal-finance-column/96315128/
 https://news.google.com/news?pz=1&hl=en&tab=nn
 https://support.google.com/news/publisher/answer/4203?hl=de
+https://www.google.com/doodles/
+https://www.youtube.com/channel/UCir93b_ftqInEaDpsWYbo_g
+https://www.youtube.com/playlist?list=PL8dPuuaLjXtPNZwz5_o_5uirJ8gQXnhEO
+https://dev.mysql.com/doc/refman/5.7/en/from-clause-subqueries.html

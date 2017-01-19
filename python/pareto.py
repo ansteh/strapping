@@ -12,7 +12,13 @@ fit = a*m**a / bins**(a+1)
 
 samples = fit / np.max(fit)
 samples = np.round(samples*50)
-print samples
+# print samples
+
+import json
+row_json = samples.tolist()
+file_path = 'pareto.json'
+with open(file_path, 'w') as f:
+  json.dump(row_json, f, sort_keys = True, indent = 2, ensure_ascii=False)
 
 plt.plot(bins, samples)
 

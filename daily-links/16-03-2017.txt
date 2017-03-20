@@ -1,4 +1,4 @@
-ttps://erikbern.com/2017/03/15/the-eigenvector-of-why-we-moved-from-language-x-to-language-y.html
+https://erikbern.com/2017/03/15/the-eigenvector-of-why-we-moved-from-language-x-to-language-y.html
 https://github.com/erikbern/eigenstuff
 https://metamind.io/research/learning-when-to-skim-and-when-to-read
 https://metamind.io/

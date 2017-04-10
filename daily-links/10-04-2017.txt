@@ -1,0 +1,10 @@
+https://semantic-ui.com/
+http://erikrood.com/Posts/DJIA.html
+https://github.com/Microsoft/reactxp
+https://github.com/kootenpv/whereami
+https://github.com/Hack-with-Github/Awesome-Hacking
+https://github.com/boramalper/magnetico
+https://github.com/junyanz/CycleGAN
+https://github.com/cayleygraph/cayley
+http://michaelbromley.github.io/ng2-pagination/#/
+https://css-tricks.com/scroll-fix-content/

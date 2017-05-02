@@ -1,0 +1,19 @@
+{
+  "name": "strapping",
+  "version": "0.0.0",
+  "description": "strapping",
+  "engines": {
+    "node": ">=4"
+  },
+  "keywords": [
+
+  ],
+  "author": "Andre Stehle",
+  "license": "MIT",
+  "dependencies": {
+
+  },
+  "devDependencies": {
+
+  }
+}
